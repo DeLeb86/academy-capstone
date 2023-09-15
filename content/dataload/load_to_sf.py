@@ -5,7 +5,7 @@ import os
 
 def get_secret() -> dict:
     print(os.getenv("AWS_REGION"))
-    sm=boto3.client("secretsmanager",region="eu-west-1")
+    sm=boto3.client("secretsmanager",region_name="eu-west-1")
     secret=sm.get_secret_value(SecretId="arn:aws:secretsmanager:eu-west-1:338791806049:secret:snowflake/capstone/login-uTKlGA")
     return json.loads(secret["SecretString"])
 

@@ -1,6 +1,7 @@
 from airflow import DAG
+from pendulum import datetime
 from airflow.providers.amazon.aws.operators.batch import BatchOperator
-from datetime import date,datetime as dt
+#from datetime import date,datetime as dt
 import os
 #import boto3
 ECR="338791806049.dkr.ecr.eu-west-1.amazonaws.com/denis:capstone-1.0.1"
@@ -15,7 +16,7 @@ dag = DAG(
     description="trigger capstone data from s3 to snowflake",
     default_args={"owner": "Airflow"},
     schedule_interval="@daily",
-    start_date=date.today(),
+    start_date=datetime(2023,9,15,tz="Europe/Brussels"),
 )
 
 
@@ -23,6 +24,6 @@ dag = DAG(
 scheduled_task = BatchOperator(
     task_id="ingestor-capstone",
     job_definition="Denis-capstone-job",
-    job_queue="academy-capstone-pxl-2023-job-queue",
-    job_name="denis-capstone-execution",
+    job_queue="academy-capstone-summer-2023-job-queue",
+    job_name="denis-execution",
     dag=dag)
