@@ -1,10 +1,11 @@
 import boto3,json
 from pyspark.sql import SparkSession,DataFrame,functions as sf
 from pyspark import SparkConf
-
+import os
 
 def get_secret() -> dict:
-    sm=boto3.client("secretsmanager")
+    print(os.getenv("AWS_REGION"))
+    sm=boto3.client("secretsmanager",region="eu-west-1")
     secret=sm.get_secret_value(SecretId="arn:aws:secretsmanager:eu-west-1:338791806049:secret:snowflake/capstone/login-uTKlGA")
     return json.loads(secret["SecretString"])
 
